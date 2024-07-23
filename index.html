@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/link.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + Preact</title>
+</head>
+
+
+<body>
+  <audio id="sound"></audio>
+  <audio src="/music/casandoSueños"  id="music"></audio>
+  <b id="toast" class="z-50 absolute w-full bottom-0 p-2 text-end pointer-events-none opacity-0 transition-all">
+  </b>
+  <script>
+    const sound = document.getElementById('sound')
+    const music = document.getElementById('music')
+    const toast = {
+      toast: document.getElementById('toast'),
+      removeStyles: function () {
+        this.toast.classList.remove('bg-red-500')
+        this.toast.classList.remove('bg-green-500')
+        this.toast.classList.remove('text-white')
+      },
+      show: function (message) {
+        this.toast.innerHTML = message
+        this.toast.style.opacity = 1
+        setTimeout(() => {
+          this.toast.style.opacity = 0  
+        }, 3000)
+      },
+      error: function (message) {
+        this.removeStyles()
+        this.toast.classList.add('bg-red-500')
+        this.toast.classList.add('text-white')
+        this.show(message)
+      },
+      success: function (message) {
+        this.removeStyles()
+        this.toast.classList.add('bg-green-500')
+        this.toast.classList.add('text-white')
+        this.show(message)
+      }
+    }
+  </script>
+  <div id="app"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>

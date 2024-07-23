@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'pixel';
+  src: url('/PixelifySans-VariableFont_wght.ttf') format('truetype');
+}
+
+#home {
+  background-color: #9bbfbb;
+  background-image: url('/menu.webp');
+}
+
+.gameTitle {
+  text-shadow: 6px 5px 0px #000000
+}
+
+.b {
+  border-style: inset solid solid;
+  border-color: #838383;
+  box-shadow: 7px 7px 0px 0px #000000c7;
+}
+
+textarea {
+  field-sizing: content
+}
+
+body {
+  font-family: 'pixel', sans-serif;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 45px;
+  aspect-ratio: .75;
+  --c: no-repeat linear-gradient(#0078B5 0 0);
+  background:
+    var(--c) 0% 50%,
+    var(--c) 50% 50%,
+    var(--c) 100% 50%;
+  animation: l7 1s infinite linear alternate;
+}
+
+@keyframes l7 {
+  0% {
+    background-size: 20% 50%, 20% 50%, 20% 50%
+  }
+
+  20% {
+    background-size: 20% 20%, 20% 50%, 20% 50%
+  }
+
+  40% {
+    background-size: 20% 100%, 20% 20%, 20% 50%
+  }
+
+  60% {
+    background-size: 20% 50%, 20% 100%, 20% 20%
+  }
+
+  80% {
+    background-size: 20% 50%, 20% 50%, 20% 100%
+  }
+
+  100% {
+    background-size: 20% 50%, 20% 50%, 20% 50%
+  }
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 10px 0;
+
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 0px #000000;
+  background: #ffffff;
+  border-radius: 0px;
+  border: 1px solid #000000;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000;
+  border: 1px solid #000000;
+  height: 15px;
+  width: 15px;
+  border-radius: 1px;
+  background: #0078B5;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5.5px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #ffffff;
+}
+
+input[type=range]::-moz-range-track {
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 0px #000000;
+  background: #ffffff;
+  border-radius: 0px;
+  border: 1px solid #000000;
+}
+
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000;
+  border: 1px solid #000000;
+  height: 15px;
+  width: 15px;
+  border-radius: 1px;
+  background: #0078B5;
+  cursor: pointer;
+}
+
+input[type=range]::-ms-track {
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type=range]::-ms-fill-lower {
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 0px;
+  box-shadow: 1px 1px 0px #000000;
+}
+
+input[type=range]::-ms-fill-upper {
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 0px;
+  box-shadow: 1px 1px 0px #000000;
+}
+
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000;
+  border: 1px solid #000000;
+  height: 15px;
+  width: 15px;
+  border-radius: 1px;
+  background: #0078B5;
+  cursor: pointer;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+  background: #ffffff;
+}
+
+input[type=range]:focus::-ms-fill-upper {
+  background: #ffffff;
+}
