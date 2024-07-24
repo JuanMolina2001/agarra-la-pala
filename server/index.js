@@ -6,24 +6,37 @@ import morgan from "morgan";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import { createJob } from './utils.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const port = process.env.PORT || 8000;
 const app = express();
 app.use(cors({
-    origin: "*"
+    origin: process.env.CORS_ORIGIN || "*"
 }));
 app.use(morgan("dev"));
 app.use(express.json({
     limit: "5mb"
 }));
 app.use(express.urlencoded({ limit: '5mb', extended: true }));
+app.use(express.static(path.join(__dirname, 'dist')));
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "*"
+        origin: process.env.CORS_ORIGIN || "*",
 
     },
     maxHttpBufferSize: 5 * 1024 * 1024
 });
 
+function pageRoute(req, res){
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+}
+
+app.get('/', pageRoute);
+app.get('/game', pageRoute);
 
 
 io.on("connection", (socket) => {
@@ -63,6 +76,7 @@ io.on("connection", (socket) => {
             socket.emit("chat", "No se ha enviado la información del trabajo")
             return
         }
+        console.log(data)
         let response = ''
         try {
             const result = await generateText({
@@ -118,6 +132,6 @@ app.post("/api/empleos/:job", async (req, res) => {
 
 });
 
-server.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
+server.listen(port, () => {
+    console.log("Server running on http://localhost:" + port);
 });
