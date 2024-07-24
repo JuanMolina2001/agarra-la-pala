@@ -23,7 +23,7 @@ export default ({ messages, entrevistador, curriculum }) => {
                     }
                     return (
                         <div className="flex flex-col text-white  m-5 text-xl w-fit">
-                            {entrevistador.name.title + ' ' + entrevistador.name.first + ' ' + entrevistador.name.last}
+                            {entrevistador.name}
                             <div className="bg-gray-700  p-2 ">
                                 {message.content}
                             </div>

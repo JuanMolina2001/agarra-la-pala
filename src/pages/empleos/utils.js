@@ -25,7 +25,7 @@ export function pixelImage(img) {
     })
 }
 export async function getEmpleo(search, empleos) {
-    const res = await fetch(`http://localhost:3000/api/empleos/${search}`, {
+    const res = await fetch(`${import.meta.env.VITE_API}/api/empleos/${search}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

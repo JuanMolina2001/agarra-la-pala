@@ -24,6 +24,9 @@ export default ({ curriculum, empleo }) => {
                 const emotion = message.split(':')[0]
                 setEmotion(emotion)
                 setMessages(msgs => [...msgs, { role: 'assistant', content: message }])
+                const msgInp = document.getElementById('msgInp')
+                msgInp.focus()
+                msgInp.removeAttribute('disabled')
             })
         })
     }, [])
@@ -39,6 +42,8 @@ export default ({ curriculum, empleo }) => {
         setMessages(newMessages)
         e.target.reset()
         socket.emit('chat', { messages: newMessages })
+        const msgInp = document.getElementById('msgInp')
+        msgInp.setAttribute('disabled', true)
     }
     return (
         <section className="flex">
@@ -51,7 +56,7 @@ export default ({ curriculum, empleo }) => {
                 <Messages messages={messages} curriculum={curriculum} entrevistador={entrevistador} />
 
                 <form className="p-5 flex gap-2 items-center" onSubmit={handleSubmit}>
-                    <input name="message" type="text" className="w-full h-10 focus:outline-none p-2 text-xl    " />
+                    <input disabled id="msgInp" name="message" type="text" className="w-full h-10 focus:outline-none p-2 text-xl    " />
                     <button type="submit" className="bg-contain bg-no-repeat bg-center p-5 flex justify-center items-center active:scale-95 transition-transform" style={{ backgroundImage: 'url(/buttons/small-green.png)' }}>
                         <img src="/icons/message-processing.svg" className="invert mx-2" height={40} width={40} alt="" />
                     </button>

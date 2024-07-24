@@ -87,7 +87,7 @@ export default ({ setCurriculum }) => {
                 <TextArea name="education" placeholder="Escribe sobre tu educación aquí" />
             </div>
             <button className=" text-white p-3 text-2xl bg-contain bg-no-repeat bg-center active:scale-95 transition-all" style={{ backgroundImage: 'url(/buttons/small-green.png)' }}>
-                SAVE
+                Guardar
             </button>
         </form>
     );

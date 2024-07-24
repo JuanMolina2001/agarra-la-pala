@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 export function getSocket() {
-    const sk = io('http://localhost:3000', {
+    const sk = io(import.meta.env.VITE_API, {
         reconnection: true,
         reconnectionAttempts: 5,
         reconnectionDelay: 1000
