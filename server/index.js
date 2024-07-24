@@ -21,7 +21,7 @@ app.use(express.json({
     limit: "5mb"
 }));
 app.use(express.urlencoded({ limit: '5mb', extended: true }));
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'public')));
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
@@ -133,5 +133,6 @@ app.post("/api/empleos/:job", async (req, res) => {
 });
 
 server.listen(port, () => {
-    console.log("Server running on http://localhost:" + port);
+    console.log("Server running on " + port);
+    console.log(process.env.CORS_ORIGIN)
 });
