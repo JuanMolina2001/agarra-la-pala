@@ -29,7 +29,7 @@ export default ({ setEmpleo, setCurriculum }) => {
         setEmpleos(empleos)
     }
     useEffect(() => {
-        music.src = '/music/cazandoSuenos.mp3'
+        music.src = '/music/accordion.mp3'
         music.loop = true
         music.play()
         return () => music.pause()

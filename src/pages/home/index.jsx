@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { Config } from "../../components"
-import { useState } from "preact/hooks"
+import { useEffect, useState } from "preact/hooks"
 import Tutorial from "./tutorial"
 const display = {
     '': null,
@@ -8,6 +8,9 @@ const display = {
     'Como Jugar': <Tutorial />
 }
 export default () => {
+    useEffect(() => {
+        music.pause()
+    }, [])
     const [component, setComponent] = useState('')
     const handleComponent = (e) => {
         setComponent(e.target.innerText)

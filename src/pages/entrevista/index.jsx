@@ -8,6 +8,8 @@ export default ({ curriculum, empleo }) => {
     const [socket, setSocket] = useState()
     const [personaje, setPersonaje] = useState()
     useEffect(async () => {
+        music.src = '/music/funny.mp3'
+        music.play()
         setPersonaje(Math.floor(Math.random() * 3) + 1)
         const sk = getSocket()
         const entrevistador = await getEntrevistador()
@@ -21,11 +23,10 @@ export default ({ curriculum, empleo }) => {
         sk.on('data', () => {
             sk.emit('chat', { messages })
             sk.on('chat', message => {
-                const emotion = message.split(':')[0]
-                setEmotion(emotion)
+                const emotion = toString(message.split(':')[0])
+                setEmotion(emotion.toLowerCase())
                 setMessages(msgs => [...msgs, { role: 'assistant', content: message }])
                 const msgInp = document.getElementById('msgInp')
-                msgInp.focus()
                 msgInp.removeAttribute('disabled')
             })
         })
