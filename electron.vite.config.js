@@ -5,7 +5,7 @@ import preact from '@preact/preset-vite'
 export default defineConfig({
   plugins: [preact()],
   build:{
-    outDir:'./electron/public'
+    outDir:'./electron/dist'
   },
   base: './'
 })

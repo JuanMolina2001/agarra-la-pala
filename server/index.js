@@ -1,5 +1,3 @@
-import { generateText } from 'ai';
-import { google } from '@ai-sdk/google';
 import express from "express";
 import cors from 'cors';
 import morgan from "morgan";
@@ -21,7 +19,7 @@ app.use(express.json({
     limit: "5mb"
 }));
 app.use(express.urlencoded({ limit: '5mb', extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
@@ -32,7 +30,7 @@ const io = new Server(server, {
 });
 
 function pageRoute(req, res){
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
 }
 
 app.get('/', pageRoute);

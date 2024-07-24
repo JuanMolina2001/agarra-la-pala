@@ -12,10 +12,19 @@ npm install
 
 ## Ejecución del Proyecto
 
+### Modo escritorio
+
+Para iniciar tanto el cliente como la aplicación de escritorio, utiliza el siguiente comando:
+
+```bash
+npm run dev:desktop
+```
+### Modo servidor
+
 Para iniciar tanto el cliente como el servidor, utiliza el siguiente comando:
 
 ```bash
-npm run dev
+npm run dev:server
 ```
 
 Asegúrate de que el puerto 3000 no esté ocupado.
@@ -26,6 +35,11 @@ Asegúrate de que el puerto 3000 no esté ocupado.
 
   ```bash
   npm run server
+  ```
+- **Iniciar solo la aplicación:**
+
+  ```bash
+  npm run desktop
   ```
 
 - **Iniciar solo el cliente:**

@@ -1,12 +1,24 @@
 import { io } from "socket.io-client";
 export function getSocket() {
-    const sk = io(import.meta.env.VITE_API, {
-        reconnection: true,
-        reconnectionAttempts: 5,
-        reconnectionDelay: 1000
-    });
-    sk.connect()
-    return sk
+    if (window.Electron) {
+        const sk = {
+            on: (event, callback) => {
+                window.Electron.on(event, callback)
+            },
+            emit: (event, data) => {
+                window.Electron.send(event, data)
+            },
+        }
+        return sk
+    } else {
+        const sk = io(import.meta.env.VITE_API, {
+            reconnection: true,
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000
+        });
+        sk.connect()
+        return sk
+    }
 }
 export async function getEntrevistador() {
     const personalidades = ['Optimista Desbordante', 'Extrovertido Frenético', 'Dramático Desmesurado', 'Perfeccionista Maniático', 'Hipocondríaco Extremo', 'Soñador Despistado', 'Entusiasta Inagotable', 'Narcisista Exagerado', 'Crítico Implacable', 'Inseguro Paranóico', 'Curioso Incansable', 'Aventurero Temerario', 'Sarcástico Profesional', 'Melancólico Poético', 'Generoso Excesivo', 'Parlanchín Incontrolable', 'Obsesivo Detallista', 'Simpático Empalagoso', 'Germofóbico Histerico', 'Competitivo Salvaje']
