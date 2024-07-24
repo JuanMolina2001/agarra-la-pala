@@ -33,3 +33,69 @@ export async function createJob(job, empleos) {
 
     return result.text;
 }
+export async function chat(data, messages) {
+    try {
+        const result =  await generateText({
+            model: google("models/gemini-1.5-flash-latest"),
+            maxTokens: 500,
+            system: `
+    Tu tarea es evaluar las habilidades y la adecuación de un candidato para un puesto específico. Evalúa sus experiencias laborales , habilidades técnicas, y capacidades interpersonales. Verifica si cumple con los requisitos del puesto. Mantén tu personalidad acorde a la del personaje que estás interpretando y añade un toque cómico. 
+    La respuesta debe ser corta (máximo 5 líneas). Antes de la respuesta, escribe la emoción que quieres que tenga tu personaje y sepárala de la respuesta con dos puntos.
+    Las emociones a usar antes de tu respuesta son:
+    - neutral
+    - feliz
+    - molesto
+    - sorprendido
+    Ejemplo:
+    feliz: Tu respuesta.
+    evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtags, etc.
+    ---
+    tu eres:
+    ${JSON.stringify(data.entrevistador)}
+    ---
+    el empleo es el siguiente:
+    ${data.empleo.replaceAll('\n', ' ')}
+        `,
+            messages: [
+                {
+                    role: "user",
+                    content: [
+                        {
+                            type: "text",
+                            text: `este es mi curriculum ${JSON.stringify(data.curriculum)}`,
+                        }
+                    ]
+                },
+                ...messages
+            ],
+
+        });
+        return result.text
+    } catch (e) {
+        console.log(e)
+        const alts = ['¡Ups! No capté del todo lo que querías decir. ¿Podrías reformular tu pregunta para asegurarme de que te ofrezco la mejor respuesta posible?", "¡Vaya! Parece que no entendí bien tu pregunta. ¿Podrías reformularla para que pueda ayudarte mejor?', 'Parece que no entendí bien tu pregunta. ¿Podrías repetirla o aclararla un poco más?']
+        return alts[Math.floor(Math.random() * alts.length)]
+    }
+}
+export async function imageToText(image) {
+    const result = await generateText({
+        model: google('models/gemini-1.5-flash-latest'),
+        maxTokens: 512,
+        messages: [
+            {
+                role: 'user',
+                content: [
+                    {
+                        type: 'text',
+                        text: 'detalla lo que hay en la imagen',
+                    },
+                    {
+                        type: 'image',
+                        image: image,
+                    },
+                ],
+            },
+        ],
+    });
+    return result.text;
+}
