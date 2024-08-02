@@ -1,8 +1,9 @@
+import { Building } from "../../components/icons"
 export default ({ empleos, setCurrent, current }) => {
     const EmpleoItem = ({ empleo, onClick, index }) => {
         return (
             <button className={`w-96 flex gap-2 p-2 border-b items-center ${current === index && 'selected'}`} onClick={onClick}>
-                <img src="/icons/buildings.svg" className="h-20 w-auto opacity-65" alt="" />
+                <Building height={80} width={80} className="opacity-65"/>
                 <p className="text-sky-700 font-bold text-lg text-start">
                     {empleo.replace(/#/g, '')}
                 </p>

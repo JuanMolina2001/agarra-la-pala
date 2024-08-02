@@ -1,5 +1,6 @@
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
+import fs from 'fs'
 export async function createJob(job, empleos) {
     const messages = empleos.map((message) => [
         {
@@ -34,60 +35,60 @@ export async function createJob(job, empleos) {
     return result.text;
 }
 export async function chat(data, messages) {
-    try {
-        const result =  await generateText({
-            model: google("models/gemini-1.5-flash-latest"),
-            maxTokens: 500,
-            system: `
-    Tu tarea es evaluar las habilidades y la adecuación de un candidato para un puesto específico. Evalúa sus experiencias laborales , habilidades técnicas, y capacidades interpersonales. Verifica si cumple con los requisitos del puesto. Mantén tu personalidad acorde a la del personaje que estás interpretando y añade un toque cómico. 
-    La respuesta debe ser corta (máximo 5 líneas). Antes de la respuesta, escribe la emoción que quieres que tenga tu personaje y sepárala de la respuesta con dos puntos.
-    Las emociones a usar antes de tu respuesta son:
-    - neutral
-    - feliz
-    - molesto
-    - sorprendido
-    Ejemplo:
-    feliz: Tu respuesta.
-    evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtags, etc.
-    ---
-    tu eres:
-    ${JSON.stringify(data.entrevistador)}
-    ---
-    el empleo es el siguiente:
-    ${data.empleo.replaceAll('\n', ' ')}
-        `,
-            messages: [
-                {
-                    role: "user",
-                    content: [
-                        {
-                            type: "text",
-                            text: `este es mi curriculum ${JSON.stringify(data.curriculum)}`,
-                        }
-                    ]
-                },
-                ...messages
-            ],
+    const { entrevistador, empleo, curriculum } = data
+    const result = await generateText({
+        model: google("models/gemini-1.5-flash-latest"),
+        maxTokens: 1024,
+        system:
+`Tu tarea es evaluar las habilidades y la adecuación de un candidato para un puesto específico. Evalúa sus experiencias laborales , habilidades técnicas, y capacidades interpersonales. Verifica si cumple con los requisitos del puesto. Mantén tu personalidad acorde a la del personaje que estás interpretando y añade un toque cómico. 
+La respuesta debe ser corta (máximo 5 líneas). Antes de la respuesta, escribe la emoción que quieres que tenga tu personaje y sepárala de la respuesta con dos puntos.
+Las emociones a usar antes de tu respuesta son:
+- neutral
+- feliz
+- molesto
+- sorprendido
+Ejemplo:
+feliz: Tu respuesta.
+evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtags, etc.
+`,
+        messages: [
+            {
+                role: 'assistant',
+                content: [
+                    {
+                        type: "text",
+                        text: `soy ${entrevistador.name},de genero ${entrevistador.gender} y mi personalidad es ${entrevistador.personalidad}  y el puesto es este ${data.empleo}`,
+                    }
+                ]
 
-        });
-        return result.text
-    } catch (e) {
-        console.log(e)
-        const alts = ['¡Ups! No capté del todo lo que querías decir. ¿Podrías reformular tu pregunta para asegurarme de que te ofrezco la mejor respuesta posible?", "¡Vaya! Parece que no entendí bien tu pregunta. ¿Podrías reformularla para que pueda ayudarte mejor?', 'Parece que no entendí bien tu pregunta. ¿Podrías repetirla o aclararla un poco más?']
-        return alts[Math.floor(Math.random() * alts.length)]
-    }
+            },
+            {
+                role: "user",
+                content: [
+                    {
+                        type: "text",
+                        text:`este es mi curriculum: \nnombre: ${curriculum.name},\nacerca de mi: ${curriculum.about},\nexperiencia ${curriculum.experience},\neducación ${entrevistador.education},\nfoto: ${curriculum.image}`,
+                    }
+                ]
+            },
+            ...messages
+        ],
+
+    });
+    return result.text
 }
 export async function imageToText(image) {
     const result = await generateText({
         model: google('models/gemini-1.5-flash-latest'),
         maxTokens: 512,
+        system: 'eres un asistente virtual que tiene que describir lo que hay en la imagen',
         messages: [
             {
                 role: 'user',
                 content: [
                     {
                         type: 'text',
-                        text: 'detalla lo que hay en la imagen',
+                        text: 'detalla lo que hay en la imagen en español',
                     },
                     {
                         type: 'image',
@@ -99,3 +100,30 @@ export async function imageToText(image) {
     });
     return result.text;
 }
+export async function evaluate(data) {
+    const result = await generateText({
+        model: google('models/gemini-1.5-flash-latest'),
+        maxTokens: 512,
+        prompt: `
+        evalúa según la siguiente conversación si el candidato es apto para el puesto de trabajo, si cumple con los requisitos del puesto.
+        determina si pasa las siguientes condiciones.
+        - tiene experiencia en el puesto
+        - tiene habilidades técnicas
+        - tiene habilidades interpersonales
+        - cumple con los requisitos del puesto
+        - Dejo una manera de contactarlo
+        - tiene una buena presentación
+        - tiene una buena actitud
+        el empleo es el siguiente:
+        ${data.empleo.replaceAll('\n', ' ')}
+        la persona es la siguiente:
+        ${data.curriculum}
+        los mensajes son los siguientes:
+        ${JSON.stringify(data.messages)}
+       solo responde si lo llamaron o no y el motivo de tu respuesta hacelo de manera comica y creativa, maximo 2 lineas
+       un titulo y el motivo
+        `
+    })
+    return result.text
+}
+evaluate(JSON.parse(fs.readFileSync('data.json', 'utf-8').toString())).then(console.log)

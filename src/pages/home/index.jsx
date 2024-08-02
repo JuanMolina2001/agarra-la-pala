@@ -4,11 +4,14 @@ import { useEffect, useState } from "preact/hooks"
 import Tutorial from "./tutorial"
 const display = {
     '': null,
-    'Configuraciones': <Config white={true} />,
+    'Configuraciones': <Config color='white' />,
     'Como Jugar': <Tutorial />
 }
-export default () => {
+export default ({setEmpleo}) => {
     useEffect(() => {
+        localStorage.removeItem('messages')
+        localStorage.removeItem('data')
+        setEmpleo('')
         music.pause()
     }, [])
     const [component, setComponent] = useState('')
@@ -18,7 +21,7 @@ export default () => {
     const Main = () => {
         return (
             <>
-                <Link className="active:scale-95" to="/game"> Nueva Partida</Link>
+                <Link className="active:scale-95" to="/job"> Nueva Partida</Link>
                 <button className="active:scale-95" onClick={handleComponent}>Configuraciones</button>
                 <button className="active:scale-95" onClick={handleComponent}>Como Jugar</button>
             </>

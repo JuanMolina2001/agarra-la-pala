@@ -20,6 +20,7 @@ Para iniciar tanto el cliente como la aplicación de escritorio, utiliza el sigu
 npm run dev:desktop
 ```
 ### Modo servidor
+-⚠️  *No se recomienda usar el servidor ya que es mas probable que se generen errores*
 
 Para iniciar tanto el cliente como el servidor, utiliza el siguiente comando:
 

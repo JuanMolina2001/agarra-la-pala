@@ -1,0 +1,225 @@
+{
+    "curriculum": {
+        "name": "juan",
+        "about": "se hacer apps",
+        "experience": "",
+        "education": "",
+        "image": "La imagen muestra a Homero Simpson, el personaje principal de la serie animada Los Simpson, con una expresión de enojo. Está vestido con un traje azul oscuro, camisa blanca y una corbata verde. Su mano derecha está extendida hacia adelante, con el puño cerrado, como si estuviera apuntando a alguien. Sus ojos están muy abiertos y su boca está ligeramente abierta, como si estuviera a punto de gritar. \n"
+    },
+    "empleo": "## Desarrollador Frontend (React) -  Tech Solutions\n\n**Descripción:**\n\nBuscamos un desarrollador Frontend con experiencia en React para unirse a nuestro equipo de desarrollo. Serás responsable de construir interfaces de usuario atractivas y funcionales para nuestras aplicaciones web.\n\n**Requisitos:**\n\n* Experiencia comprobable con React.js y JavaScript.\n* Conocimiento de HTML5, CSS3 y herramientas de diseño web.\n* Familiaridad con Git y metodologías ágiles.\n* Capacidad para trabajar de forma independiente y en equipo.\n* Pasión por la tecnología y el desarrollo web.\n",
+    "entrevistador": {
+        "name": "Mr Hans-Georg Knab",
+        "personalidad": "Hipocondríaco Extremo, Parlanchín Incontrolable, Simpático Empalagoso, Competitivo Salvaje",
+        "gender": "male",
+        "personaje": 2
+    },
+    "messages": [
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "neutral: Hmm, interesante. \"Se hacer apps\" es un poco vago. ¿Qué tipo de apps? ¿Tienes algún proyecto que pueda ver? Y... ¿Homero Simpson? ¿Es un error? ¿O es una declaración de intenciones? \n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "soy tan bueno que no necesito explicar lo que hago"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "sorprendido: ¡Wow! ¿En serio? ¿Tan bueno eres que no necesitas explicar nada?  ¿Y Homero Simpson? ¿Es tu alter ego?  ¿O es un mensaje subliminal?  ¡Necesito más información! \n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "mire este dibujo : La imagen muestra una cara sonriente con dos ojos y una boca. \n"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "molesto: ¡Un dibujo de una cara sonriente! ¿Es eso todo? ¿En serio? ¿No tienes nada más que mostrar? ¿No tienes un portafolio, un proyecto, algo que demuestre tu talento?  ¡No me hagas perder el tiempo! \n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "no te gusta "
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "feliz: ¡Claro que me gusta!  Es un dibujo muy simpático.  ¿Lo hiciste tú?  ¿Te gusta dibujar?  ¡Me encanta la creatividad!  ¿Y qué tal si me cuentas un poco más sobre tus habilidades?  ¿Qué tipo de apps puedes hacer?  ¿Tienes algún proyecto que pueda ver?  ¡Estoy seguro de que tienes mucho que ofrecer! \n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "mire este dibujo : La imagen muestra la cabeza de un personaje amarillo con dos ojos grandes y blancos, una nariz grande y marrón, y una boca pequeña. El personaje tiene el pelo amarillo y está dibujado con un estilo simple. El fondo es amarillo."
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "neutral:  Hmm, interesante.  Un personaje amarillo con un estilo simple.  ¿Es un diseño original?  ¿O es un personaje de algún juego o serie?  ¿Puedes contarme más sobre él?  ¿Qué tipo de apps puedes hacer con este estilo?  \n\n\n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "que te importa"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "molesto: ¡¿Qué te importa?!  ¿En serio?  ¿Así es como tratas a las personas que te están dando una oportunidad?  ¿No te interesa saber más sobre el puesto?  ¿No quieres saber si eres el candidato adecuado?  ¡Si no te interesa, entonces no pierdas mi tiempo! \n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "perdon"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "feliz: ¡No te preocupes!  Entiendo que puede ser un poco frustrante cuando no se sabe qué decir.  ¿Qué tal si empezamos de nuevo?  ¿Puedes contarme un poco más sobre ti y tus habilidades?  ¿Qué tipo de apps te gusta crear?  ¿Tienes algún proyecto que pueda ver?  ¡Estoy seguro de que tienes mucho que ofrecer! \n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "apps para escritorio "
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "neutral: Apps para escritorio, ¿eh?  ¿Qué tipo de apps?  ¿Juegos, herramientas de productividad, aplicaciones de diseño?  ¿Tienes algún ejemplo de apps que hayas creado?  ¿Puedes contarme un poco más sobre tu experiencia con el desarrollo de apps para escritorio? \n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "con electron y react"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "feliz: ¡Electron y React!  ¡Me gusta!  Es una combinación muy popular y poderosa.  ¿Tienes algún proyecto que pueda ver?  ¿Qué tipo de apps has creado con Electron y React?  ¿Puedes contarme un poco más sobre tu experiencia con estas tecnologías?  ¡Estoy ansioso por aprender más sobre tu trabajo! \n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "no quiero"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "molesto: ¡No quieres?  ¿En serio?  ¿No quieres mostrar tu trabajo?  ¿No quieres demostrar que eres el candidato adecuado para el puesto?  ¿No quieres que te den una oportunidad?  ¡Si no quieres, entonces no pierdas mi tiempo! \n\n\n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": ":p"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "sorprendido:  :p  ¿Qué significa eso?  ¿Estás jugando conmigo?  ¿No te tomas en serio esta oportunidad?  ¿No quieres trabajar en [Nombre de la Empresa]?  ¡Necesito una respuesta seria! \n"
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "."
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Vamos a revisar todas las entrevistas y te informaremos de nuestra decisión y sei quedas te llamaremos pronto. ¡Cuídate!"
+                }
+            ]
+        }
+    ]
+}
