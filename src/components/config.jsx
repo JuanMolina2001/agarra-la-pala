@@ -1,11 +1,19 @@
-export default ({white}) => {
+import { useState } from 'preact/hooks'
+import {Volume1, Volumex} from '../components/icons'
+export default ({ color}) => {
     const Range = ({ target }) => {
+        const [mute , setMute] = useState(target.muted)
         return (
             <div className="flex gap-2">
-                <img height={30} width={30} src={ target.muted ? '/icons/volume-x.svg' : '/icons/volume-1.svg'} className={`${white && 'invert'} transition-all active:scale-95 cursor-pointer`} draggable={false} alt="" onClick={(e) => {
-                    target.muted = !target.muted
-                    e.target.src = target.muted ? '/icons/volume-x.svg' : '/icons/volume-1.svg'
-                }} />
+                <button onClick={(e) => {
+                        target.muted = !target.muted
+                        setMute(target.muted)
+                    }}>
+                   {
+                          !target.muted ? <Volume1 height={30} width={30}  className=' transition-all active:scale-95 cursor-pointer' color={color}  /> : <Volumex height={30} width={30}  className='transition-all active:scale-95 cursor-pointer' color={color} />  
+                   }
+                </button>
+
                 <input type="range" name="sound" id="sound" min="0" max="1" step="0.01" value={target.volume} onChange={(e) => {
                     target.volume = parseFloat(e.target.value);
                     e.target.nextElementSibling.innerHTML = parseInt(target.volume * 100) + '%'

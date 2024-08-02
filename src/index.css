@@ -6,6 +6,12 @@
   font-family: 'pixel';
   src: url('/PixelifySans-VariableFont_wght.ttf') format('truetype');
 }
+.cursor-bucket {
+  cursor: url('/icons/fill.svg'), auto;
+}
+.red{
+  filter:   hue-rotate(-110deg) saturate(200%) ;
+}
 
 #home {
   background-color: #9bbfbb;

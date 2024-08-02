@@ -99,3 +99,28 @@ export async function imageToText(image) {
     });
     return result.text;
 }
+export async function evaluate({ messages, curriculum, empleo }) {
+    const  result =await generateText({
+          model: google('models/gemini-1.5-flash-latest'),
+          maxTokens: 512,
+          prompt: `
+          evalúa según la siguiente conversación si el candidato es apto para el puesto de trabajo, si cumple con los requisitos del puesto.
+          determina si pasa las siguientes condiciones.
+          - tiene experiencia en el puesto
+          - tiene habilidades técnicas
+          - tiene habilidades interpersonales
+          - cumple con los requisitos del puesto
+          - Dejo una manera de contactarlo
+          - tiene una buena presentación
+          - tiene una buena actitud
+          el empleo es el siguiente:
+          ${empleo.replaceAll('\n', ' ')}
+          la persona es la siguiente:
+          ${curriculum}
+          los mensajes son los siguientes:
+          ${JSON.stringify(messages)}
+         solo responde si lo llamaron o no y el motivo de tu respuesta hacelo de manera comica y creativa, maximo 2 lineas
+          `
+      })
+      console.log(result.text)
+  }

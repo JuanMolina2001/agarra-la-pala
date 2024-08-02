@@ -3,7 +3,7 @@ import cors from 'cors';
 import morgan from "morgan";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import { createJob, chat, imageToText } from './utils.js';
+import { createJob, chat, imageToText, evaluate } from './utils.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
@@ -69,7 +69,16 @@ app.post("/api/empleos/:job", async (req, res) => {
     res.send(result);
 
 });
-
+app.post("/api/evaluate", async (req, res) => {
+    const { messages, curriculum, empleo } = req.body;
+    const result = await evaluate({ messages, curriculum, empleo });
+    res.send(result);
+});
+app.post("/api/imageToText", async (req, res) => {
+    const { image } = req.body;
+    const result = await imageToText(image);
+    res.send(result);
+});
 server.listen(port, () => {
     console.log("Server running on " + port);
     console.log(process.env.CORS_ORIGIN)
