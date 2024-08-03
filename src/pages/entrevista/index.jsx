@@ -11,7 +11,7 @@ export default ({ curriculum, empleo }) => {
         empleo: empleo,
         entrevistador: null
     })
-    const emotion = messages.length >0 ? messages[messages.length - 1].content[0].text.split(':')[0].toLowerCase() : 'neutral'
+    const emotion = messages.length > 0 ? messages[messages.length - 1].parts[0].text.split(':')[0].toLowerCase() : 'neutral'
     const [socket, setSocket] = useState()
     const [type, setType] = useState('text')
     const navigate = useNavigate()
@@ -20,23 +20,26 @@ export default ({ curriculum, empleo }) => {
         music.play()
         const sk = getSocket()
         setSocket(sk)
+        console.log('socket connected')
         !data.entrevistador ? data.entrevistador = await getEntrevistador() : null
+        console.log('entrevistador loaded')
         data.curriculum.image = await imageToText(curriculum.image || data.curriculum.image)
+        console.log('image to text')
         localStorage.setItem('data', JSON.stringify(data))
+        console.log('local data saved')
         setData(data)
-        if (messages[0]?.role !== 'assistant' || !messages) sk.emit('chat', { data: data, messages: messages })
+        console.log('data loaded')
+        const lastIsUser =messages > 0 && messages[messages.length - 1].role === 'user'
+        const history = lastIsUser ? messages.slice(0, messages.length - 1) : messages
+        sk.emit('startChat', { data: data, history: history })
         sk.on('chat', message => {
             setMessages(msgs => [...msgs, {
-                role: 'assistant', content: [{
-                    type: 'text',
-                    text: message
-
-                }]
+                role: 'model', parts: [{ text: message }]
             }])
             const msgInp = document.getElementById('msgInp')
             msgInp.removeAttribute('disabled')
         })
-
+        if (lastIsUser) sk.emit('chat', { message: messages[messages.length - 1].parts[0].text })
     }, [])
     useEffect(() => {
         if (messages.length === 0) return
@@ -65,21 +68,16 @@ export default ({ curriculum, empleo }) => {
         if (!message) return
         const newMessages = [...messages, {
             role: 'user',
-            content: [
-                {
-                    type: 'text',
-                    text: message
-                }
-            ]
+            parts: [{ text: message }]
+
         }]
         setMessages(newMessages)
         e.target.reset()
         if (messages.filter(msg => msg.role === 'user').length >= 9) {
             setMessages(msgs => [...msgs, {
-                role: 'assistant', content: [
-                    { type: 'text', text: despedirse(emotion) }
-                ]
-            }])
+                role: 'model', parts: [{ text: despedirse(emotion) }]
+            }
+            ])
 
             evaluate({
                 ...data,
@@ -93,7 +91,7 @@ export default ({ curriculum, empleo }) => {
             })
             return
         } else {
-            socket.emit('chat', { messages: newMessages, data: data })
+            socket.emit('chat', { message })
         }
         const msgInp = document.getElementById('msgInp')
         msgInp.setAttribute('disabled', true)
@@ -109,19 +107,22 @@ export default ({ curriculum, empleo }) => {
                 }} src={`/characters/${data.entrevistador.gender}/${data.entrevistador.personaje}/${emotion || 'neutral'}.png`} className="absolute top-[31.8%] left-[30%] h-[40vh] w-[20vw]" alt="" />}
                 <img src="/oficina.jpg" draggable={false} className="h-screen w-[50vw]" alt="" />
             </section>
-            <section className="h-screen w-[50vw] bg-gray-800 flex flex-col relative" >
-                <span className="absolute text-2xl text-white top-0 right-0  bg-gray-800 p-1 w-full text-end">
+            <section className="h-screen w-[50vw] bg-gray-100 flex flex-col relative" >
+                <span className="absolute text-lg text-black top-0 right-0  bg-gray-300 p-1 w-full text-end shadow-sm shadow-black">
                     {messages.filter(msg => msg.role === 'user').length || 0}/10
                 </span>
                 <Messages messages={messages} curriculum={{ name: 'juan' }} entrevistador={data.entrevistador} />
                 <form className="p-5 flex gap-2 items-center justify-between overflow-auto" onSubmit={handleSubmit}>
-                    <select name="type" value={type} onChange={(e) => setType(e.target.value)}>
-                        <option value='text'> texto</option>
-                        <option value="image">imagen</option>
-                    </select>
-                    <input id="msgInp" name="message" type="text" className="w-full h-10 focus:outline-none p-2 text-xl" hidden={type !== 'text'} />
+                    <div className="nes-select w-48">
+                        <select name="type" value={type} onChange={(e) => setType(e.target.value)}>
+                            <option value='text'> texto</option>
+                            <option value="image">imagen</option>
+                        </select>
+                    </div>
+
+                    <input id="msgInp" name="message" type="text" className="w-full h-10 focus:outline-none p-2 text-lg nes-input" hidden={type !== 'text'} />
                     <Draw hidden={type !== 'image'} />
-                    <button type="submit" className="bg-contain bg-no-repeat bg-center p-5 flex justify-center items-center active:scale-95 transition-transform" style={{ backgroundImage: 'url(/buttons/small-green.png)' }}>
+                    <button type="submit" className="bg-contain bg-no-repeat bg-center flex justify-center items-center active:scale-95 transition-transform nes-btn is-success" >
                         <Messageprocessing color='white' height={40} width={40} />
                     </button>
                 </form>

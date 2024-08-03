@@ -31,9 +31,9 @@ export default ({ setCurriculum, curriculum }) => {
         }
         reader.readAsDataURL(file);
     }
-    const H2 = ({ children, icon }) => <div className="flex border-b-2 gap-1 border-current ">
+    const Title = ({ children, icon }) => <div className="flex  gap-1  ">
         <i className={`pixelart-icons-font${icon}`}></i>
-        <h2 className="text-2xl font-bold">{children}</h2>
+        <h3 className="text-lg font-bold">{children}</h3>
     </div>
     const TextArea = ({ name, placeholder, value }) => {
         const [length, setLength] = useState(0);
@@ -44,10 +44,7 @@ export default ({ setCurriculum, curriculum }) => {
                     curriculum[name] = e.target.value
                     setCurriculum(curriculum)
                     e.target.focus()
-                }} className="" placeholder={placeholder} maxLength={150}>{value}</textarea>
-                <span className="absolute bottom-0 right-0 m-2 text-sm">
-                    {length}/150
-                </span>
+                }} className="nes-textarea min-w-44" placeholder={placeholder} maxLength={150}>{value}</textarea>
             </div>
         )
     }
@@ -64,15 +61,15 @@ export default ({ setCurriculum, curriculum }) => {
                 image: image
             });
         }}>
-            <div className="flex justify-around bg-white overflow-y-auto h-[70vh] text-black shadow-[7px_7px_0px_1px_rgba(0,0,0,0.75)]  flex-col p-10 w-[30vw] [&_h2]:py-2 [&_h2]:font-bold  [&_textarea]:w-full [&_textarea]:focus:outline-none text-xl [&_textarea]:min-h-[10vh] ">
-                <h1 className="text-4xl text-center font-bold">Curriculum</h1>
+            <div className="flex justify-around bg-white overflow-y-auto h-[70vh] text-black shadow-[7px_7px_0px_1px_rgba(0,0,0,0.75)]  flex-col p-10 w-[30vw] [&_h2]:py-2 [&_h2]:font-bold  [&_textarea]:w-full [&_textarea]:focus:outline-none text-lg [&_textarea]:min-h-[10vh] ">
+                <h2 className="text-4xl text-center font-bold">Curriculum</h2>
                 <div className="flex w-full ">
                     <div className="w-full">
-                        <H2 icon="user.svg">Sobre mí</H2>
+                        <Title icon="user.svg">Sobre mí</Title>
                         <TextArea value={curriculum.about} name="about" placeholder="Escribe sobre ti aquí" />
                     </div>
                     <div className="w-fit h-full flex items-center gap-1 flex-col px-2 py-7  ">
-                        <canvas id="canvas" className={`cursor-pointer border-dashed border-4 active:scale-95 transition-all border-black picture`} width={100} height={100} onClick={e => e.target.nextElementSibling.click()} />
+                        <canvas id="canvas" className={`nes-pointer border-dashed border-4 active:scale-95 transition-all border-black picture`} width={100} height={100} onClick={e => e.target.nextElementSibling.click()} />
                         <input type="file" name="picture" accept="image/*" className="hidden" onChange={handleImage} />
                         <span>
                             200x200
@@ -80,15 +77,15 @@ export default ({ setCurriculum, curriculum }) => {
                         <input onChange={(e) => setCurriculum(c => ({
                             ...c,
                             name: e.target.value
-                        }))} type="text" name="name" className="bg-transparent text-center text-xl font-bold" placeholder="Tu nombre" >{curriculum.name}</input>
+                        }))} type="text" name="name" className="bg-transparent text-center text-lg font-bold w-44" placeholder="Tu nombre" >{curriculum.name}</input>
                     </div>
                 </div>
-                <H2 icon="briefcase.svg">Experiencia</H2>
+                <Title icon="briefcase.svg">Experiencia</Title>
                 <TextArea value={curriculum.experience} name="experience" placeholder="Escribe sobre tu experiencia aquí" />
-                <H2 icon="book-open.svg">Educación</H2>
+                <Title icon="book-open.svg">Educación</Title>
                 <TextArea value={curriculum.education} name="education" placeholder="Escribe sobre tu educación aquí" />
             </div>
-            <button className=" text-white p-3 text-2xl bg-contain bg-no-repeat bg-center active:scale-95 transition-all" style={{ backgroundImage: 'url(/buttons/small-green.png)' }}>
+            <button className=" is-success p-3 text-lg bg-contain bg-no-repeat bg-center active:scale-95 transition-all nes-btn">
                 Guardar
             </button>
         </form>

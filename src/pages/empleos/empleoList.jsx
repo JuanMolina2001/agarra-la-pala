@@ -19,7 +19,7 @@ export default ({ empleos, setCurrent, current }) => {
                     }} empleo={empleo.split('\n')[0]} />)
                     :
                     <div className="w-full h-full flex justify-center items-center" id="list">
-                        <p className="text-xl p-2">
+                        <p className="text-lg p-2">
                             Busca empleos para mostrarlos aquí
                         </p>
                     </div>

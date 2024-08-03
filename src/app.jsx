@@ -1,11 +1,14 @@
-import { Routes, Route, Link } from "react-router-dom"
+import { Routes, Route, useNavigate } from "react-router-dom"
 import { Empleos, Entrevista, Home, Result } from "./pages"
 import { useEffect, useState } from "preact/hooks"
 import { getSocket } from "./pages/entrevista/utils";
 import { Alert } from "./components/icons";
+
 export function App() {
-  const [error, setError] = useState('')
+  const navigate = useNavigate()
+  const [error, setError] = useState('error en el servidor')
   useEffect(() => {
+
     const addClickEventListener = (el) => {
       el.addEventListener('click', () => {
         sound.src = '/sounds/click.mp3';
@@ -13,7 +16,7 @@ export function App() {
       });
       const socket = getSocket()
       socket.on('error', data => {
-        setError(data)
+        document.getElementById('dialog').showModal()
       })
     };
 
@@ -42,40 +45,30 @@ export function App() {
   return (
     <div className="h-screen w-screen relative">
       <Routes>
-        <Route path='/' element={<Home setEmpleo={setEmpleo}  />} />
+        <Route path='/' element={<Home setEmpleo={setEmpleo} />} />
         <Route path='/job' element={<Empleos setCurriculum={setCurriculum} setEmpleo={setEmpleo} curriculum={curriculum} />} />
         <Route path='/interview' element={<Entrevista curriculum={curriculum} empleo={empleo} />} />
         <Route path='/result/:text' element={<Result />} />
         <Route path='*' element={<Home setEmpleo={setEmpleo} />} />
       </Routes>
-      <div id="error" className={`absolute w-screen h-screen z-50 top-0 left-0 backdrop-brightness-75 flex justify-center items-center ${!error && 'hidden'}`}>
-        <div className=" w-1/4 h-1/4 flex flex-col bg-orange-100 shadow-[7px_7px_0px_1px_rgba(0,0,0,0.75)] ">
-          <header className="bg-orange-800 text-white p-2">
-            Error
-          </header>
-          <div className="grid grid-cols-3 grid-rows-2 h-full w-full">
-            <div className="col-span-1 row-span-1 p-2 text-center ">
-              <Alert height={80} width={80} color='red' className='' />
-            </div>
-            <div className="col-span-2  flex  items-center">
-              <p> {error}</p>
-            </div>
-            <div className="col-span-3 flex justify-around items-center">
-              <Link to={'/'} className="bg-red-600 text-white px-7 p-2" onClick={() => {
-                setError('')
-              }}>
-                Volver al inicio
-              </Link>
-              <button className="border border-black px-7 p-2 " onClick={()=>{
-                window.location.reload()
-                setError('')
-              }}>
-                Reintentar
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <dialog class="nes-dialog" id="dialog-default">
+        <form method="dialog">
+          <p class="title">Dialog</p>
+          <p className="my-5">{error}</p>
+          <menu class="dialog-menu flex gap-4">
+            <button onClick={() => {
+              window.location.reload()
+            }} class="nes-btn ">
+              Reintentar
+            </button>
+            <button onClick={() => {
+              navigate('/')
+            }} class="nes-btn is-primary">
+              Volver al inicio
+            </button>
+          </menu>
+        </form>
+      </dialog>
     </div>
   )
 }

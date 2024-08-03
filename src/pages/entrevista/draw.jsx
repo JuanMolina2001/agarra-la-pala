@@ -36,8 +36,8 @@ export default ({hidden}) => {
     }
     const Button = ({ icon, onClick }) => {
         return (
-            <div onClick={onClick} className="bg-blue-500 text-white select-none p-2 active:scale-95 transition-all  cursor-pointer">
-               <i className={`pixelart-icons-font-${icon} text-xl`}></i>
+            <div onClick={onClick} className="bg-blue-500 text-white select-none p-2 active:scale-95 transition-all  nes-pointer">
+               <i className={`pixelart-icons-font-${icon} text-lg`}></i>
             </div>
         )
     }

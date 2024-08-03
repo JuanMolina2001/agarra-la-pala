@@ -4,15 +4,24 @@
 
 @font-face {
   font-family: 'pixel';
-  src: url('/PixelifySans-VariableFont_wght.ttf') format('truetype');
+  src: url('/fonts/PressStart2P-Regular.ttf') format('truetype');
+}
+button{
+  cursor: url('/cursor-click.png'), auto;
 }
 .cursor-bucket {
   cursor: url('/icons/fill.svg'), auto;
 }
-.red{
-  filter:   hue-rotate(-110deg) saturate(200%) ;
+*:focus  {
+  outline: 0;
 }
-
+a{
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: none;
+  color: currentColor
+}
 #home {
   background-color: #9bbfbb;
   background-image: url('/menu.webp');

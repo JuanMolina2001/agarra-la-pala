@@ -10,7 +10,7 @@ export default ({ color}) => {
                         setMute(target.muted)
                     }}>
                    {
-                          !target.muted ? <Volume1 height={30} width={30}  className=' transition-all active:scale-95 cursor-pointer' color={color}  /> : <Volumex height={30} width={30}  className='transition-all active:scale-95 cursor-pointer' color={color} />  
+                          !target.muted ? <Volume1 height={30} width={30}  className=' transition-all active:scale-95 nes-pointer' color={color}  /> : <Volumex height={30} width={30}  className='transition-all active:scale-95 nes-pointer' color={color} />  
                    }
                 </button>
 
@@ -18,7 +18,7 @@ export default ({ color}) => {
                     target.volume = parseFloat(e.target.value);
                     e.target.nextElementSibling.innerHTML = parseInt(target.volume * 100) + '%'
                 }} />
-                <p className="text-xl">
+                <p className="text-lg">
                     {target.volume * 100 + '%'}
                 </p>
 

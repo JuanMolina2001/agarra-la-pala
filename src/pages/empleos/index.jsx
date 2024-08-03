@@ -47,15 +47,15 @@ export default ({ setEmpleo, setCurriculum,curriculum }) => {
         <div className=" bg-slate-400 flex flex-col h-screen relative">
             <Curriculum setCurriculum={setCurriculum} curriculum={curriculum} />
             <Config />
-            <header className="p-2 flex gap-2 items-center justify-center w-full bg-white shadow-md shadow-[#00000050] z-20">
+            <header className="p-2 flex gap-3 items-center justify-center w-full bg-white shadow-md shadow-[#00000050] z-20">
                 <img draggable={false} src="/link.png" height={50} width={50} alt="" />
                 <form className="flex gap-1" onSubmit={handleSubmit}>
-                    <input id="search" name="search" type="text" className="bg-slate-200 focus:outline-none p-2 h-11 text-xl" placeholder="Buscar empleos ..." />
+                    <input id="search" name="search" type="text" className="bg-slate-200 focus:outline-none p-2 h-11 text-lg" placeholder="Buscar empleos ..." />
                     <button className="active:scale-95 transition-all" >
-                        <Search color={'black'} height={24} width={24} />
+                        <Search color={'black'} height={30} width={30} />
                     </button>
                 </form>
-                <button className=" text-white p-3 text-2xl h-14 overflow-hidden bg-contain bg-no-repeat bg-center active:scale-95 transition-all" style={{ backgroundImage: 'url(/buttons/circle.png)' }} onClick={() => {
+                <button className=" text-white p-3 text-lg h-14 overflow-hidden bg-contain bg-no-repeat bg-center active:scale-95 transition-all" style={{ backgroundImage: 'url(/buttons/circle.png)' }} onClick={() => {
                     const element = document.getElementById('curriculum')
                     element.style = 'opacity:1;pointer-events:all;'
 

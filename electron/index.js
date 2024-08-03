@@ -1,9 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { createJob, chat, imageToText, evaluate } from './utils.js';
+import { createJob, chat, imageToText, evaluate, chatGenai } from './utils.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
-import fs from 'fs';
 import { loadEnvFile } from 'process';
 loadEnvFile('electron.env');
 const __filename = fileURLToPath(import.meta.url);
@@ -22,26 +21,52 @@ function crateWindow() {
 }
 app.whenReady().then(crateWindow);
 
-ipcMain.on("chat", async (event, {messages,data}) => {
+ipcMain.on("startChat", async (event, { data, history }) => {
     if (!data) {
         event.reply("error", "No se ha enviado la información del trabajo")
         return
     }
     try {
-        const response = await chat(data, messages)
-        event.reply("chat", response);
+        const { curriculum, entrevistador, empleo } = data
+        const chat = chatGenai({ entrevistador, empleo, history })
+        if (history.length <= 0) {
+            const result = await chat.sendMessage(`este es mi curriculum: \nnombre: ${curriculum.name},\nacerca de mi: ${curriculum.about},\nexperiencia ${curriculum.experience},\neducación ${entrevistador.education},\nfoto: ${curriculum.image}`)
+            event.reply("chat", result.response.text())
+        }
+        ipcMain.on("chat", async (event, { message }) => {
+            const r = await chat.sendMessage(message)
+            event.reply("chat", r.response.text())
+        })
+
     } catch (error) {
         console.log(error);
         event.reply("error", "Ocurrió un error al chatear");
     }
 });
 
+
+
+// ipcMain.on("chat", async (event, {messages,data}) => {
+//     if (!data) {
+//         event.reply("error", "No se ha enviado la información del trabajo")
+//         return
+//     }
+
+//     try {
+//         const response = await chat(data, messages)
+//         event.reply("chat", response);
+//     } catch (error) {
+//         console.log(error.cause);
+//         event.reply("error", "Ocurrió un error al chatear");
+//     }
+// });
+
 ipcMain.on("empleos", async (event, { job, empleos }) => {
     try {
         const result = await createJob(job, empleos);
         event.reply("empleos", result);
     } catch (error) {
-        console.log(error);
+        console.log(error.cause);
         event.reply("error", 'Ocurrió un error al crear el trabajo');
     }
 });
@@ -50,7 +75,7 @@ ipcMain.on("evaluate", async (event, data) => {
         const result = await evaluate(data);
         event.reply("evaluate", result);
     } catch (error) {
-        console.log(error);
+        console.log(error.cause);
         event.reply("error", "Ocurrió un error al evaluar el candidato");
     }
 
@@ -63,7 +88,7 @@ ipcMain.on("imageToText", async (event, image) => {
             result = await imageToText(image);
 
         } catch (error) {
-            console.log(error);
+            console.log(error.cause);
             event.reply("error", "Ocurrió un error al convertir la imagen en texto");
         }
     }

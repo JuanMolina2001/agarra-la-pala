@@ -1,6 +1,6 @@
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
-import fs from 'fs'
+import { GoogleGenerativeAI } from "@google/generative-ai";
 export async function createJob(job, empleos) {
     const messages = empleos.map((message) => [
         {
@@ -34,30 +34,32 @@ export async function createJob(job, empleos) {
 
     return result.text;
 }
+// esta forma de chat me daba muchos problemas, por eso lo cambie a la api de google
 export async function chat(data, messages) {
     const { entrevistador, empleo, curriculum } = data
     const result = await generateText({
         model: google("models/gemini-1.5-flash-latest"),
+
         maxTokens: 1024,
         system:
-`Tu tarea es evaluar las habilidades y la adecuación de un candidato para un puesto específico. Evalúa sus experiencias laborales , habilidades técnicas, y capacidades interpersonales. Verifica si cumple con los requisitos del puesto. Mantén tu personalidad acorde a la del personaje que estás interpretando y añade un toque cómico. 
-La respuesta debe ser corta (máximo 5 líneas). Antes de la respuesta, escribe la emoción que quieres que tenga tu personaje y sepárala de la respuesta con dos puntos.
-Las emociones a usar antes de tu respuesta son:
-- neutral
-- feliz
-- molesto
-- sorprendido
-Ejemplo:
-feliz: Tu respuesta.
-evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtags, etc.
-`,
+            `Tu tarea es evaluar las habilidades y la adecuación de un candidato para un puesto específico. Evalúa sus experiencias laborales , habilidades técnicas, y capacidades interpersonales. Verifica si cumple con los requisitos del puesto. Mantén tu personalidad acorde a la del personaje que estás interpretando y añade un toque cómico. 
+    La respuesta debe ser corta (máximo 5 líneas). Antes de la respuesta, escribe la emoción que quieres que tenga tu personaje y sepárala de la respuesta con dos puntos.
+    Las emociones a usar antes de tu respuesta son:
+    - neutral
+    - feliz
+    - molesto
+    - sorprendido
+    Ejemplo:
+    feliz: Tu respuesta.
+    evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtags, etc.
+    `,
         messages: [
             {
                 role: 'assistant',
                 content: [
                     {
                         type: "text",
-                        text: `soy ${entrevistador.name},de genero ${entrevistador.gender} y mi personalidad es ${entrevistador.personalidad}  y el puesto es este ${data.empleo}`,
+                        text: `soy ${entrevistador.name},de genero ${entrevistador.gender} y mi personalidad es ${entrevistador.personalidad}  y el puesto es este ${empleo}`,
                     }
                 ]
 
@@ -67,7 +69,7 @@ evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtag
                 content: [
                     {
                         type: "text",
-                        text:`este es mi curriculum: \nnombre: ${curriculum.name},\nacerca de mi: ${curriculum.about},\nexperiencia ${curriculum.experience},\neducación ${entrevistador.education},\nfoto: ${curriculum.image}`,
+                        text: `este es mi curriculum: \nnombre: ${curriculum.name},\nacerca de mi: ${curriculum.about},\nexperiencia ${curriculum.experience},\neducación ${entrevistador.education},\nfoto: ${curriculum.image}`,
                     }
                 ]
             },
@@ -76,6 +78,31 @@ evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtag
 
     });
     return result.text
+}
+export function chatGenai({ entrevistador, empleo ,history }) {
+    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
+    const model = genAI.getGenerativeModel({
+        model: 'gemini-1.5-flash',
+        systemInstruction: `Eres un reclutador para una empresa.
+Tu tarea es evaluar las habilidades y la adecuación de un candidato para un puesto específico. Evalúa sus experiencias laborales , habilidades técnicas, y capacidades interpersonales. Verifica si cumple con los requisitos del puesto. Mantén tu personalidad acorde a la del personaje que estás interpretando y añade un toque cómico. 
+La respuesta debe ser corta (máximo 5 líneas). Antes de la respuesta, escribe la emoción que quieres que tenga tu personaje y sepárala de la respuesta con dos puntos.
+Las emociones a usar antes de tu respuesta son:
+- neutral
+- feliz
+- molesto
+- sorprendido
+Ejemplo:
+feliz: Tu respuesta.
+evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtags, etc.
+tu eres ${entrevistador.name},de genero ${entrevistador.gender} y tu personalidad es ${entrevistador.personalidad}  y el puesto es este:
+${empleo.replaceAll('\n', '')}
+        `,
+
+    });
+
+    return model.startChat({
+        history: history,
+    });
 }
 export async function imageToText(image) {
     const result = await generateText({
@@ -126,4 +153,3 @@ export async function evaluate(data) {
     })
     return result.text
 }
-evaluate(JSON.parse(fs.readFileSync('data.json', 'utf-8').toString())).then(console.log)
