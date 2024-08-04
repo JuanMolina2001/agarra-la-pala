@@ -8,8 +8,8 @@
   <title>Agarra la pala</title>
 </head>
 
-
-<body>
+<body class="bg-black">
+  <div class="classic-loader absolute z-40 bottom-0 right-0" style="display:none;"></div>
   <audio id="sound"></audio>
   <audio src="" id="music"></audio>
   <b id="toast" class="z-50 absolute w-full bottom-0 p-2 text-end pointer-events-none opacity-0 transition-all">
@@ -21,7 +21,7 @@
       const dialog = document.getElementById('dialog-default')
       dialog.showModal()
       dialog.querySelector('.error').innerHTML = error
-      retry? dialog.querySelector('.retry').style.display = 'block' : dialog.querySelector('.retry').style.display = 'none'
+      retry ? dialog.querySelector('.retry').style.display = 'block' : dialog.querySelector('.retry').style.display = 'none'
     }
     const toast = {
       toast: document.getElementById('toast'),
@@ -51,7 +51,7 @@
       }
     }
   </script>
-  <div id="app"></div>
+  <div id="app" ></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

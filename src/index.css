@@ -2,26 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+#app {
+  transition: opacity 3s ease-out; 
+}
+#app.opacity-0 {
+  transition: opacity 0s; 
+}
+
 @font-face {
   font-family: 'pixel';
   src: url('/fonts/PressStart2P-Regular.ttf') format('truetype');
 }
-button{
+
+button {
   cursor: url('/cursor-click.png'), auto;
 }
+
 .cursor-bucket {
   cursor: url('/icons/fill.svg'), auto;
 }
-*:focus  {
+
+*:focus {
   outline: 0;
 }
-a{
+
+a {
   text-decoration: none;
 }
-a:hover{
+
+a:hover {
   text-decoration: none;
   color: currentColor
 }
+
 #home {
   background-color: #9bbfbb;
   background-image: url('/menu.webp');
@@ -179,4 +192,29 @@ input[type=range]:focus::-ms-fill-lower {
 
 input[type=range]:focus::-ms-fill-upper {
   background: #ffffff;
+}
+
+.classic-loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  background: linear-gradient(135deg, #0000 calc(50% - 0.5em), #ffffff 0 calc(50% + 0.5em), #0000 0) right/300% 100%;
+  animation: l22 2s infinite;
+}
+
+.classic-loader::before {
+  content: "Loading...";
+  color: #0000;
+  padding: 0 5px;
+  background: inherit;
+  background-image: linear-gradient(135deg, #fafafa calc(50% - 0.5em), #fff 0 calc(50% + 0.5em), #ffffff 0);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes l22 {
+  100% {
+    background-position: left
+  }
 }
