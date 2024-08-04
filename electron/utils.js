@@ -146,7 +146,7 @@ export async function evaluate(data) {
         la persona es la siguiente:
         ${data.curriculum}
         los mensajes son los siguientes:
-        ${JSON.stringify(data.messages)}
+        ${data.messages.map((message) => `${message.role}: ${message.parts[0].text}`).join('\n')}
        solo responde si lo llamaron o no y el motivo de tu respuesta hacelo de manera comica y creativa, maximo 2 lineas
        un titulo y el motivo
         `
