@@ -1,8 +1,9 @@
 import { useEffect } from "preact/hooks"
 
 export default ({ messages,curriculum , entrevistador  }) => {
-    
     useEffect(() => {
+        if (messages.length === 0) return
+        localStorage.setItem('messages', JSON.stringify(messages))
         const container = document.querySelector('.message-list')
         container.scrollTop = container.scrollHeight
     }, [messages])

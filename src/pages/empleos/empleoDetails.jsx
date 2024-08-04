@@ -9,6 +9,7 @@ export default ({ empleo, setEmpleo }) => {
             <div className="flex flex-col gap-2" dangerouslySetInnerHTML={{ __html: marked.parse(empleo) }}></div>
             {empleo &&
                 <button className=" w-fit self-center p-3 text-lg bg-contain bg-no-repeat bg-center active:scale-95 transition-all is-primary nes-btn "  onClick={(e) => {
+                    console.log(empleo)
                     setEmpleo(empleo)
                     navigate('/interview')
                 }} >

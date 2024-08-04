@@ -1,10 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { marked } from "marked";
 export default () => {
-    // const { text } = useParams()
-    const text = `## ¡No lo llamaron! 
-
-El candidato, con su actitud de "soy tan bueno que no necesito explicar nada", dejó a la IA con más preguntas que respuestas.  Parece que el dibujo de Homero Simpson no fue suficiente para convencer al reclutador. `
+    const { text } = useParams()
     return (
         <div className="bg-slate-400 flex items-center justify-center h-screen flex-col gap-10 " >
             <div className="p-4 text-6xl  [&_p]:text-3xl font-bold text-center" dangerouslySetInnerHTML={{ __html: marked.parse(text) }}>
