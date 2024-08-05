@@ -20,7 +20,7 @@ function crateWindow() {
         }
     });
     win.maximize();
-    win.loadURL(process.env.URL || `file://${path.join(__dirname, 'dist', 'index.html')}`);
+    win.loadURL(process.env.URL || `file://${path.join(__dirname, 'app.asar', 'index.html')}`);
     process.env.URL && win.webContents.openDevTools();
     !process.env.URL && win.setMenu(null);
 }
