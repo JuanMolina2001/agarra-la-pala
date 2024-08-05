@@ -12,9 +12,8 @@ npm install
 
 ## Ejecución del Proyecto
 
-### Modo escritorio
 
-Para iniciar tanto el cliente como la aplicación de escritorio, utiliza el siguiente comando:
+Para iniciar el proyecto utiliza el siguiente comando:
 
 ```bash
 npm run dev
@@ -22,16 +21,36 @@ npm run dev
 
 ## Comandos Específicos
 
-- **Iniciar solo la aplicación:**
+- **Iniciar solo la aplicación de electron:**
 
   ```bash
-  npm run desktop
+  npm run electron
   ```
 
-- **Iniciar solo el cliente:**
+- **Iniciar solo preact:**
 
   ```bash
-  npm run client
+  npm run preact
+  ```
+## Empaquetar el Proyecto
+
+Para empaquetar utiliza el siguiente comando:
+
+```bash
+npm run build
+```
+
+## Comandos Específicos
+
+- **empaquetar solo la aplicación de electron:**
+
+  ```bash
+  npm run build:electron
   ```
 
+- **empaquetar solo preact:**
+
+  ```bash
+  npm run build:preact
+  ```
 ---

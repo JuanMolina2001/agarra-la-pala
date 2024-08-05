@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { pixelImage } from "./utils";
 export default ({ setCurriculum, curriculum }) => {
-    const [image, setImage] = useState(encodeURI('/placeholder.jpg'));
+    const [image, setImage] = useState(encodeURI('placeholder.jpg'));
     const canvas = useRef();
     useEffect(() => {
         const picture = document.querySelector('#canvas');

@@ -5,6 +5,9 @@ export const socket = {
     },
     emit: (event, data) => {
         window.Electron.send(event, data)
+    },
+    off: (event) => {
+        window.Electron.remove(event)
     }
 }
 export async function getEntrevistador() {
@@ -20,7 +23,7 @@ export async function getEntrevistador() {
     const personaje = Math.floor(Math.random() * 3) + 1
     return { name, personalidad, gender, personaje }
 }
-export function despedirse() {
+function despedirse() {
     const messages = [`Bueno ha sido un placer conocer más sobre ti y tu experiencia. Agradecemos mucho tu tiempo hoy`,
         'Nos tomaremos unos días para revisar todas las candidaturas y te llamaremos  pronto  para informarte sobre nuestra decisión. ¡Que tengas un buen día!',
         'Vamos a revisar todas las entrevistas y te informaremos de nuestra decisión y sei quedas te llamaremos pronto. ¡Cuídate!',
@@ -28,6 +31,7 @@ export function despedirse() {
     ]
     return messages[Math.floor(Math.random() * messages.length)]
 }
+export const lastMessage = despedirse()
 export async function evaluate(data) {
     return new Promise((resolve, reject) => {
         try {
@@ -43,10 +47,10 @@ export async function evaluate(data) {
 export function imageToText(image) {
     return new Promise((resolve, reject) => {
         try {
-                window.Electron.send('imageToText', image)
-                window.Electron.on('imageToText', res => {
-                    resolve(res)
-                })
+            window.Electron.send('imageToText', image)
+            window.Electron.on('imageToText', res => {
+                resolve(res)
+            })
         } catch (e) {
             reject(e)
         }

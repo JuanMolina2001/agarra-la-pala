@@ -4,7 +4,11 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
 import { loadEnvFile } from 'process';
-loadEnvFile('electron.env');
+try {
+    loadEnvFile('../electron.env');
+} catch (e) {
+    console.log(e);
+}
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 function crateWindow() {
@@ -12,12 +16,13 @@ function crateWindow() {
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
         }
     });
     win.maximize();
-    win.loadURL(process.env.URL || `file://${__dirname}/dist/index.html`);
-    win.webContents.openDevTools();
+    win.loadURL(process.env.URL || `file://${path.join(__dirname, 'dist', 'index.html')}`);
+    process.env.URL && win.webContents.openDevTools();
+    !process.env.URL && win.setMenu(null);
 }
 app.whenReady().then(crateWindow);
 

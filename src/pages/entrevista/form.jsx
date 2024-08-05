@@ -25,7 +25,7 @@ export default ({ setMessages }) => {
         setMessages(messages=>[...messages, { role: 'user', parts: [{ text: message }] }])
     }
     return (
-        <form className="p-5 flex gap-2 items-center justify-between overflow-auto" onSubmit={handleSubmit}>
+        <form className="p-5 flex gap-2 items-center justify-between overflow-auto" id="form" onSubmit={handleSubmit}>
             <div className="nes-select w-48">
                 <select name="type" value={type} onChange={(e) => setType(e.target.value)}>
                     <option value='text'> texto</option>

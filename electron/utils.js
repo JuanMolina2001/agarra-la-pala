@@ -147,9 +147,9 @@ determina si pasa las siguientes condiciones.
 el empleo es el siguiente:
 ${data.empleo.replaceAll('\n', ' ')}
 la persona es la siguiente:
-${data.curriculum}
+${JSON.stringify(data.curriculum, null, 2)}
 los mensajes son los siguientes:
-${data.messages.map((message) => `${message.role}: ${message.parts[0].text}`).join('\n')}
+${data.messages.map((message) => `${message.role}: ${message.parts[0].text}`).join(';')}
 solo responde si lo llamaron o no y el motivo de tu respuesta hacelo de manera comica y creativa, maximo 2 lineas un titulo y el motivo
         `
     })

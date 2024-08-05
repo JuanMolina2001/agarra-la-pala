@@ -2,14 +2,16 @@ import { Routes, Route, useNavigate } from "react-router-dom"
 import { Empleos, Entrevista, Home, Result } from "./pages"
 import { useEffect, useState } from "preact/hooks"
 import { socket } from "./pages/entrevista/utils";
-import { Alert } from "./components/icons";
 
 export function App() {
-  const navigate = useNavigate()
   useEffect(() => {
+    sound.src = 'sounds/click.mp3';
     const addClickEventListener = (el) => {
       el.addEventListener('click', () => {
-        sound.src = '/sounds/click.mp3';
+        if(!sound.muted){
+          sound.pause();
+          sound.currentTime = 0;
+        }
         sound.play();
       });
       socket.on('error', data => {
@@ -48,7 +50,6 @@ export function App() {
         <Route path='/result/:text' element={<Result />} />
         <Route path='*' element={<Home setEmpleo={setEmpleo} />} />
       </Routes>
-
     </div>
   )
 }
