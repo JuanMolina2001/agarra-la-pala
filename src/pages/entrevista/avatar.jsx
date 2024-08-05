@@ -1,3 +1,5 @@
+import { useEffect } from "preact/hooks"
+
 export default ({ data, emotion }) => {
     useEffect(() => {
         if (emotion === 'neutral') return

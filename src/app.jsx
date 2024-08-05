@@ -1,22 +1,19 @@
 import { Routes, Route, useNavigate } from "react-router-dom"
 import { Empleos, Entrevista, Home, Result } from "./pages"
 import { useEffect, useState } from "preact/hooks"
-import { getSocket } from "./pages/entrevista/utils";
+import { socket } from "./pages/entrevista/utils";
 import { Alert } from "./components/icons";
 
 export function App() {
   const navigate = useNavigate()
-  const [error, setError] = useState('error en el servidor')
   useEffect(() => {
-
     const addClickEventListener = (el) => {
       el.addEventListener('click', () => {
         sound.src = '/sounds/click.mp3';
         sound.play();
       });
-      const socket = getSocket()
       socket.on('error', data => {
-        document.getElementById('dialog').showModal()
+       showModal(data,true)
       })
     };
 
@@ -51,24 +48,7 @@ export function App() {
         <Route path='/result/:text' element={<Result />} />
         <Route path='*' element={<Home setEmpleo={setEmpleo} />} />
       </Routes>
-      <dialog class="nes-dialog" id="dialog-default">
-        <form method="dialog">
-          <p class="title">Dialog</p>
-          <p className="my-5">{error}</p>
-          <menu class="dialog-menu flex gap-4">
-            <button onClick={() => {
-              window.location.reload()
-            }} class="nes-btn ">
-              Reintentar
-            </button>
-            <button onClick={() => {
-              navigate('/')
-            }} class="nes-btn is-primary">
-              Volver al inicio
-            </button>
-          </menu>
-        </form>
-      </dialog>
+
     </div>
   )
 }

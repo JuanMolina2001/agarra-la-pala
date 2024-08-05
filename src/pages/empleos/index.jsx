@@ -5,7 +5,6 @@ import Curriculum from "./curriculum"
 import Config from "./config"
 import { getEmpleo } from "./utils"
 import {Sliders2, Search } from "../../components/icons"
-
 export default ({ setEmpleo, setCurriculum,curriculum }) => {
     const [empleos, setEmpleos] = useState([])
     const [current, setCurrent] = useState(0)

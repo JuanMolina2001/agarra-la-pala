@@ -79,30 +79,33 @@ export async function chat(data, messages) {
     });
     return result.text
 }
-export function chatGenai({ entrevistador, empleo ,history }) {
-    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
-    const model = genAI.getGenerativeModel({
-        model: 'gemini-1.5-flash',
-        systemInstruction: `Eres un reclutador para una empresa.
+export function chatGenai({ entrevistador, empleo, history }) {
+    try {
+        const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
+        const model = genAI.getGenerativeModel({
+            model: 'gemini-1.5-flash',
+            systemInstruction: `Eres un reclutador para una empresa.
 Tu tarea es evaluar las habilidades y la adecuación de un candidato para un puesto específico. Evalúa sus experiencias laborales , habilidades técnicas, y capacidades interpersonales. Verifica si cumple con los requisitos del puesto. Mantén tu personalidad acorde a la del personaje que estás interpretando y añade un toque cómico. 
-La respuesta debe ser corta (máximo 5 líneas). Antes de la respuesta, escribe la emoción que quieres que tenga tu personaje y sepárala de la respuesta con dos puntos.
+La respuesta debe ser corta (maximo 250 caracteres). Antes de la respuesta, escribe la emoción que quieres que tenga tu personaje y sepárala de la respuesta con dos puntos.
+Evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtags, etc.
 Las emociones a usar antes de tu respuesta son:
 - neutral
 - feliz
 - molesto
 - sorprendido
 Ejemplo:
-feliz: Tu respuesta.
-evita poner caracteres especiales como comillas, paréntesis, corchetes, hashtags, etc.
+feliz: Oh vaya, qué interesante.
 tu eres ${entrevistador.name},de genero ${entrevistador.gender} y tu personalidad es ${entrevistador.personalidad}  y el puesto es este:
-${empleo.replaceAll('\n', '')}
-        `,
+${empleo.replaceAll('\n', '')}`,
 
-    });
+        });
 
-    return model.startChat({
-        history: history,
-    });
+        return model.startChat({
+            history: history,
+        });
+    } catch (error) {
+        throw new Error(error)
+    }
 }
 export async function imageToText(image) {
     const result = await generateText({
@@ -132,23 +135,22 @@ export async function evaluate(data) {
         model: google('models/gemini-1.5-flash-latest'),
         maxTokens: 512,
         prompt: `
-        evalúa según la siguiente conversación si el candidato es apto para el puesto de trabajo, si cumple con los requisitos del puesto.
-        determina si pasa las siguientes condiciones.
-        - tiene experiencia en el puesto
-        - tiene habilidades técnicas
-        - tiene habilidades interpersonales
-        - cumple con los requisitos del puesto
-        - Dejo una manera de contactarlo
-        - tiene una buena presentación
-        - tiene una buena actitud
-        el empleo es el siguiente:
-        ${data.empleo.replaceAll('\n', ' ')}
-        la persona es la siguiente:
-        ${data.curriculum}
-        los mensajes son los siguientes:
-        ${data.messages.map((message) => `${message.role}: ${message.parts[0].text}`).join('\n')}
-       solo responde si lo llamaron o no y el motivo de tu respuesta hacelo de manera comica y creativa, maximo 2 lineas
-       un titulo y el motivo
+evalúa según la siguiente conversación si el candidato es apto para el puesto de trabajo, si cumple con los requisitos del puesto.
+determina si pasa las siguientes condiciones.
+- tiene experiencia en el puesto
+- tiene habilidades técnicas
+- tiene habilidades interpersonales
+- cumple con los requisitos del puesto
+- Dejo una manera de contactarlo
+- tiene una buena presentación
+- tiene una buena actitud
+el empleo es el siguiente:
+${data.empleo.replaceAll('\n', ' ')}
+la persona es la siguiente:
+${data.curriculum}
+los mensajes son los siguientes:
+${data.messages.map((message) => `${message.role}: ${message.parts[0].text}`).join('\n')}
+solo responde si lo llamaron o no y el motivo de tu respuesta hacelo de manera comica y creativa, maximo 2 lineas un titulo y el motivo
         `
     })
     return result.text

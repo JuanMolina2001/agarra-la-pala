@@ -1,23 +1,10 @@
-import { io } from "socket.io-client";
-export function getSocket() {
-    if (window.Electron) {
-        const sk = {
-            on: (event, callback) => {
-                window.Electron.on(event, callback)
-            },
-            emit: (event, data) => {
-                window.Electron.send(event, data)
-            },
-        }
-        return sk
-    } else {
-        const sk = io(import.meta.env.VITE_API, {
-            reconnection: true,
-            reconnectionAttempts: 5,
-            reconnectionDelay: 1000
-        });
-        sk.connect()
-        return sk
+
+export const socket = {
+    on: (event, callback) => {
+        window.Electron.on(event, callback)
+    },
+    emit: (event, data) => {
+        window.Electron.send(event, data)
     }
 }
 export async function getEntrevistador() {
@@ -34,34 +21,20 @@ export async function getEntrevistador() {
     return { name, personalidad, gender, personaje }
 }
 export function despedirse() {
-    const messgaes = [`Bueno ha sido un placer conocer más sobre ti y tu experiencia. Agradecemos mucho tu tiempo hoy`,
+    const messages = [`Bueno ha sido un placer conocer más sobre ti y tu experiencia. Agradecemos mucho tu tiempo hoy`,
         'Nos tomaremos unos días para revisar todas las candidaturas y te llamaremos  pronto  para informarte sobre nuestra decisión. ¡Que tengas un buen día!',
         'Vamos a revisar todas las entrevistas y te informaremos de nuestra decisión y sei quedas te llamaremos pronto. ¡Cuídate!',
         'Gracias por tu tiempo, te llamaremos pronto para informarte sobre nuestra decisión. ¡Que tengas un buen día!',
     ]
-    return messgaes[Math.floor(Math.random() * messgaes.length)]
+    return messages[Math.floor(Math.random() * messages.length)]
 }
 export async function evaluate(data) {
     return new Promise((resolve, reject) => {
         try {
-            if (window.Electron) {
-                window.Electron.send('evaluate', data)
-                window.Electron.on('evaluate', res => {
-                    resolve(res)
-                })
-            } else {
-                fetch(import.meta.env.VITE_API + '/api/evaluate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }).then(res => res.text()).then(res => {
-                    resolve(res)
-                }).catch(e => {
-                    reject(e)
-                })
-            }
+            window.Electron.send('evaluate', data)
+            window.Electron.on('evaluate', res => {
+                resolve(res)
+            })
         } catch (e) {
             reject(e)
         }
@@ -70,24 +43,10 @@ export async function evaluate(data) {
 export function imageToText(image) {
     return new Promise((resolve, reject) => {
         try {
-            if (window.Electron) {
                 window.Electron.send('imageToText', image)
                 window.Electron.on('imageToText', res => {
                     resolve(res)
                 })
-            } else {
-                fetch(import.meta.env.VITE_API + '/api/imageToText', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ image })
-                }).then(res => res.text()).then(res => {
-                    resolve(res)
-                }).catch(e => {
-                    reject(e)
-                })
-            }
         } catch (e) {
             reject(e)
         }

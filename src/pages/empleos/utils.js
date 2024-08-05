@@ -27,20 +27,10 @@ export function pixelImage(img) {
 export function getEmpleo(search, empleos) {
     return new Promise((resolve, reject) => {
         try {
-            if (window.Electron) {
-                window.Electron.send('empleos', { job:search, empleos })
-                window.Electron.on('empleos', (data) => {
-                    resolve(data)
-                })
-            } else {
-                fetch(`${import.meta.env.VITE_API}/api/empleos/${search}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ empleos: empleos })
-                }).then(res => res.text()).then(data => resolve(data))
-            }
+            window.Electron.send('empleos', { job: search, empleos })
+            window.Electron.on('empleos', (data) => {
+                resolve(data)
+            })
         } catch (e) {
             reject(e)
         }

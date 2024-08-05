@@ -28,9 +28,24 @@ ipcMain.on("startChat", async (event, { data, history }) => {
     }
     try {
         const { curriculum, entrevistador, empleo } = data
-        const chat = chatGenai({ entrevistador, empleo, history })
+        const message = `mi curriculum: 
+        nombre: ${curriculum.name},
+        acerca de mi: ${curriculum.about},
+        experiencia ${curriculum.experience},
+        educación ${entrevistador.education},
+        foto: ${curriculum.image}`
+        const chat = chatGenai({
+            entrevistador,
+            empleo,
+            history: history.length > 0 ?
+                [
+                    { role: 'user', parts: [{ text: message }] },
+                    ...history
+                ] :
+                history
+        })
         if (history.length <= 0) {
-            const result = await chat.sendMessage(`este es mi curriculum: \nnombre: ${curriculum.name},\nacerca de mi: ${curriculum.about},\nexperiencia ${curriculum.experience},\neducación ${entrevistador.education},\nfoto: ${curriculum.image}`)
+            const result = await chat.sendMessage(message)
             event.reply("chat", result.response.text())
         }
         ipcMain.on("chat", async (event, { message }) => {

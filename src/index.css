@@ -7,6 +7,7 @@
 }
 #app.opacity-0 {
   transition: opacity 0s; 
+  pointer-events: none;
 }
 
 @font-face {

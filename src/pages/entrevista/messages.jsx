@@ -1,15 +1,31 @@
 import { useEffect } from "preact/hooks"
-
-export default ({ messages,curriculum , entrevistador  }) => {
+import { despedirse, evaluate } from "./utils";
+import { useNavigate } from "react-router-dom";
+export default ({ messages, curriculum, entrevistador, addMessage,data }) => {
+    const navigate = useNavigate()
     useEffect(() => {
         if (messages.length === 0) return
         localStorage.setItem('messages', JSON.stringify(messages))
-        const container = document.querySelector('.message-list')
+        const container = document.querySelector('.nes-container')
         container.scrollTop = container.scrollHeight
+        if (messages.filter(msg => msg.role === 'user').length >= 5) {
+            messages.push({ role: 'model', parts: [{ text: despedirse() }] })
+            evaluate({
+                ...data,
+                messages
+            }).then(res => {
+                e.target.querySelector('input').remove()
+                const button = e.target.querySelector('button')
+                button.innerHTML = 'Finalizar'
+                button.addEventListener('click', () => {
+                    navigate(`/result/_${res}`)
+                })
+            })
+        }
     }, [messages])
     return (
-        <section class="nes-container flex-1 overflow-auto">
-            <section class="message-list" i>
+        <section class="nes-container flex-1 overflow-auto scroll-smooth">
+            <section class="message-list " i>
                 {
                     messages.map((message, i) => {
                         const direction = message.role === 'user'

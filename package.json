@@ -4,34 +4,24 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:desktop": "npm-run-all --parallel  client desktop",
-    "dev:server": "npm-run-all --parallel server client",
-    "build:desktop": "vite build --config electron.vite.config.js",
-    "build:server": "vite build --config server.vite.config.js",
-    "build": "npm-run-all --parallel build:desktop build:server",
+    "dev": "npm-run-all --parallel  client desktop",
+    "build": "vite build",
     "desktop": "electron electron/index.js",
-    "server": "node --watch server/index.js",
     "client": "vite",
-    "preview": "vite preview",
-    "deploy": "cd server  && fly deploy"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@ai-sdk/google": "^0.0.27",
     "@electron/packager": "^18.3.3",
     "@google/generative-ai": "^0.16.0",
     "ai": "^3.2.32",
-    "cors": "^2.8.5",
     "electron": "^31.2.1",
-    "express": "^4.19.2",
     "marked": "^13.0.2",
-    "morgan": "^1.10.0",
     "nes.css": "^2.3.0",
     "npm-run-all": "^4.1.5",
     "pixelarticons": "^1.8.1",
     "preact": "^10.22.1",
-    "react-router-dom": "^6.25.1",
-    "socket.io": "^4.7.5",
-    "socket.io-client": "^4.7.5"
+    "react-router-dom": "^6.25.1"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.3",

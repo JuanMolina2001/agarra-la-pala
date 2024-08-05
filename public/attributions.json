@@ -1,0 +1,21 @@
+{
+    "voices": [
+        {
+            "Author": "The Danicon ",
+            "link": "https://daniconshow.itch.io/generic-male-voice-pack"
+        },
+        {
+            "Author": "Elise Astoria",
+            "link": "https://eliseastoria.itch.io/vn-fem-voice-pack"
+        }
+    ],
+    "music":[
+        {
+            "author":"BlondPanda",
+            "link":"https://freesound.org/s/659889/ "
+        },{
+            "author":"LagMusics",
+            "link":"https://freesound.org/s/662153/"
+        }
+    ]
+}
